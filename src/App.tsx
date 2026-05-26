@@ -98,7 +98,7 @@ const App: Component = () => {
     <div class="container">
     {/*Hero*/}
       <header class="hero">
-        <h1>Nails by Phondi</h1>
+        <h1>Nails by Phondy</h1>
         <p>
         Professional nail care at your convenience
         </p>
