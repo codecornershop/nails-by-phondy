@@ -5,6 +5,17 @@ const App: Component = () => {
   const [showServices, setShowServices] = createSignal(true);
   const [showGallery, setShowGallery] = createSignal(true);
 
+  const galleryImages = [
+    'img1.webp',
+    'img2.webp',
+    'img3.webp',
+    'img4.webp',
+    'img5.webp',
+    'img6.webp',
+    'img9.webp',
+    'img10.webp'
+  ]
+
   //Base service selection
   const [sets, setSets] = createSignal([
     { name: 'Short Set', price: 100, selected: false },
