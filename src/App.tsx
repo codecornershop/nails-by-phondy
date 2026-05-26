@@ -166,14 +166,16 @@ const App: Component = () => {
           <div class="section-content">
             <div class="gallery-grid">
               {/* Gallery Images */}
-              <img src="/images/gallery/img1.webp" alt="Nail design" loading="lazy" />
-              <img src="/images/gallery/img2.webp" alt="Nail design" loading="lazy" />
-              <img src="/images/gallery/img3.webp" alt="Nail design" loading="lazy" />
-              <img src="/images/gallery/img4.webp" alt="Nail design" loading="lazy" />
-              <img src="/images/gallery/img5.webp" alt="Nail design" loading="lazy" />
-              <img src="/images/gallery/img6.webp" alt="Nail design" loading="lazy" />
-              <img src="/images/gallery/img9.webp" alt="Nail design" loading="lazy" />
-              <img src="/images/gallery/img10.webp" alt="Nail design" loading="lazy" />
+              <For each={galleryImages}>
+                {(img) => (
+                  <img
+                    src={`${import.meta.env.BASE_URL}images/gallery/${img}`}
+                    alt="Nail design"
+                    loading="lazy"
+                    onClick={() => window.open(`${import.meta.env.BASE_URL}images/gallery/${img}`, '_blank')}
+                  />
+                )}
+              </For>
             </div>
           </div>
         )}
