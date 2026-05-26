@@ -10,5 +10,5 @@ export default defineConfig({
   build: {
     target: 'esnext',
   },
-  base: '/nails-by-phondi/'
+  base: process.env.NODE_ENV === 'production' ? '/nails-by-phondi/' : '/'
 });

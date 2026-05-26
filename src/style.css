@@ -24,18 +24,22 @@ h1, h2, h3 {
 .hero {
   text-align: center;
   padding: 3rem 1rem;
-  background: #f9e6e0;
+  background-image: url('/images/hero-bg.webp');
+  background-size: cover;
+  background-position: center;
+  background-color: #f9cfc2;
   border-radius: 24px;
   margin-bottom: 2rem;
 }
 
 .btn {
   display: inline-block;
-  background: #e08b6e;
+  background: linear-gradient(to bottom right, #e08b6e, #f2b8a5);
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 24px;
   margin-top: 1rem;
+  text-decoration: none;
 }
 
 .services, .gallery, .contact {
@@ -68,8 +72,9 @@ h1, h2, h3 {
 }
 
 .gallery-grid {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 2px;
   padding: 0.75rem 0;
   border-bottom: 1px solid #eee;
 }
@@ -96,7 +101,7 @@ input, select, button {
 }
 
 button {
-  background: #e08b6e;
+  background: linear-gradient(to bottom right, #e08b6e, #f2b8a5);
   color: white;
   border: none;
   cursor: pointer;

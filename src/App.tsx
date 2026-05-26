@@ -55,7 +55,7 @@ const App: Component = () => {
     e.preventDefault();
 
     const selectedSet = sets().find(s => s.selected);
-    const addOns = addOns().filter(a => a.selected);
+    const selectedAddOnsList = addOns().filter(a => a.selected);
 
     const message = `*New Booking Request!*%0A%0A
     *Customer:* ${formData().name}%0A
@@ -63,7 +63,7 @@ const App: Component = () => {
     *Date:* ${formData().date}%0A
     *Order:*%0A
     ${selectedSet?.name} - R${selectedSet?.price}%0A
-    ${selectedAddOns.map(a => `+ ${a.name} - R${a.price}`).join(`%0A`) || 'No add-ons'}%0A%0A
+    ${selectedAddOnsList.map(a => `+ ${a.name} - R${a.price}`).join(`%0A`) || 'No add-ons'}%0A%0A
     *Total:* R${totalPrice()}%0A%0A
     _Reply to this message to confirm booking_`;
 
@@ -91,7 +91,7 @@ const App: Component = () => {
         <p>
         Professional nail care at your convenience
         </p>
-        <a href="#contact" class="btn">
+        <a href="#contact" class="btn hero-btn">
           Book Now
         </a>
       </header>
@@ -166,6 +166,14 @@ const App: Component = () => {
           <div class="section-content">
             <div class="gallery-grid">
               {/* Gallery Images */}
+              <img src="/images/gallery/img1.webp" alt="Nail design" loading="lazy" />
+              <img src="/images/gallery/img2.webp" alt="Nail design" loading="lazy" />
+              <img src="/images/gallery/img3.webp" alt="Nail design" loading="lazy" />
+              <img src="/images/gallery/img4.webp" alt="Nail design" loading="lazy" />
+              <img src="/images/gallery/img5.webp" alt="Nail design" loading="lazy" />
+              <img src="/images/gallery/img6.webp" alt="Nail design" loading="lazy" />
+              <img src="/images/gallery/img9.webp" alt="Nail design" loading="lazy" />
+              <img src="/images/gallery/img10.webp" alt="Nail design" loading="lazy" />
             </div>
           </div>
         )}
@@ -250,9 +258,7 @@ const App: Component = () => {
 
       {/* Contact Info Bar */}
       <footer class="info-bar">
-        <a href="https://wa.me/27818171278">Whatsapp</a>
         <a href="https://instagram.com/nailsbyphondy">Instagram</a>
-        <span>Mon-Sat 9AM - 5PM</span>
       </footer>
     </div>
   );
