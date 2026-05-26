@@ -1,4 +1,4 @@
-#Nails by Phondy
+# Nails by Phondy
 
 > Booking site for nail technician. Customers select services, add-ons, and submit via WhatApp.
 
