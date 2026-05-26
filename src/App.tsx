@@ -14,7 +14,7 @@ const App: Component = () => {
     'img6.webp',
     'img9.webp',
     'img10.webp'
-  ]
+  ];
 
   //Base service selection
   const [sets, setSets] = createSignal([
