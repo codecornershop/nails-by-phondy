@@ -111,7 +111,9 @@ const App: Component = () => {
       <section class="collapsible-section">
         <div class="section-header" onClick={() => setShowServices(!showServices())}>
           <h2>Services & Prices</h2>
-          <span class="toggle-icon">{showServices() ? '-' : '+'}</span>
+          <span class="toggle-icon" style={{ transform: showServices() ? 'rotate(0deg)' : 'rotate(-90deg)' }}>
+            ▾
+          </span>
         </div>
         {showServices() && (
           <div class="section-content">
@@ -171,7 +173,9 @@ const App: Component = () => {
       <section class="collapsible-section">
         <div class="section-header" onClick={() => setShowGallery(!showGallery())}>
           <h2>Recent Work</h2>
-          <span class="toggle-icon">{showGallery() ? '-' : '+'}</span>
+          <span class="toggle-icon" style={{ transform: showGallery() ? 'rotate(0deg)' : 'rotate(-90deg)' }}>
+            ▾
+          </span>
         </div>
         {showGallery() && (
           <div class="section-content">
