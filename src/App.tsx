@@ -2,8 +2,8 @@ import { Component, createSignal, For } from 'solid-js';
 import './style.css';
 
 const App: Component = () => {
-  const [showServices, setShowServices] = createSignal(true);
-  const [showGallery, setShowGallery] = createSignal(true);
+  const [showServices, setShowServices] = createSignal(false);
+  const [showGallery, setShowGallery] = createSignal(false);
 
   const galleryImages = [
     'img1.webp',
