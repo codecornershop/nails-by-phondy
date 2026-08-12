@@ -19,12 +19,12 @@ const App: Component = () => {
   //Base service selection
   const [sets, setSets] = createSignal([
     // Acryclic sets
-    { name: 'Short Set', price: 100, category: "acrylic", selected: false },
-    { name: 'Medium Set', price: 150, category: "acrylic", selected: false },
-    { name: 'Long Set', price: 200, category: "acrylic", selected: false },
+    { name: 'Acrylic (Short)', price: 100, category: "manicure", selected: false },
+    { name: 'Acrylic (Medium)', price: 150, category: "manicure", selected: false },
+    { name: 'Acrylic (Long)', price: 200, category: "manicure", selected: false },
     // Gel Sets
-    {name: "Rubber Base", price: 220, category: "gel", selected: false},
-    {name: "Polygel", price: 260, category: "gel", selected: false},
+    {name: "Rubber Base", price: 220, category: "manicure", selected: false},
+    {name: "Polygel", price: 260, category: "manicure", selected: false},
     // Manicure
     {name: "Buff and Shine", price: 70, category: "manicure", selected: false},
     {name: "Massage/Treatment - 5 Minutes", price: 100, category: "manicure", selected: false},
