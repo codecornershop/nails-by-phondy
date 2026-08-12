@@ -49,18 +49,19 @@ const App: Component = () => {
 
   // Calculate Total
   const totalPrice = () => {
-    const setTotal = sets().find(s => s.selected)?.price || 0;
+    const setTotal = sets()
+      .filter(s => s.selected)
+      .reduce((sum, item) => sum + item.price, 0);
     const addOnsTotal = addOns()
       .reduce((sum, item) => sum + (item.price * item.quantity), 0);
     return setTotal + addOnsTotal;
   };
 
   // Toggle set
-  const selectSet = (index: number) => {
-    setSets(prev => prev.map((set, i) => ({
-      ...set,
-      selected: i === index
-    })));
+  const toggleSet = (index: number) => {
+    setSets(prev => prev.map((item, i) => 
+      i === index ? {...item, selected: !item.selected } : item,
+    ));
   };
 
   // Toggle add-on
@@ -75,7 +76,8 @@ const App: Component = () => {
   const handleSubmit = (e: Event) => {
     e.preventDefault();
 
-    const selectedSet = sets().find(s => s.selected);
+    const selectedSets = sets().filter(s => s.selected);
+    const setList = selectedSets.map(s => `${s.name} - R${s.price}`).join('%0A');
     const addOnsList = addOns().filter(a => a.quantity > 0).map(a => `${a.name} x ${a.quantity} - R${a.price * a.quantity}`).join(', ');
 
     const message = `*New Booking Request!*%0A%0A
@@ -83,7 +85,7 @@ const App: Component = () => {
     *Email:* ${formData().email}%0A
     *Date:* ${formData().date}%0A
     *Order:*%0A
-    ${selectedSet?.name} - R${selectedSet?.price}%0A
+    ${setList || 'None Selected'}%0A
     ${addOnsList || 'No add-ons'}%0A%0A
     *Total:* R${totalPrice()}%0A%0A
     _Reply to this message to confirm booking_`;
@@ -191,7 +193,7 @@ const App: Component = () => {
                                 'service-card': true,
                                 'selected': item.selected
                               }}
-                              onClick={() => selectSet(fullIndex)}
+                              onClick={() => toggleSet(fullIndex)}
                             >
                               <span class="service-name">{item.name}</span>
                               <span class="service-price">R{item.price}</span>
