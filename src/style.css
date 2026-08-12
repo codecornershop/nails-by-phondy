@@ -1,3 +1,16 @@
+:root {
+  --bg: #fdf8f5;
+  --bg-light: #f5f0eb;
+  --bg-hover: #ede8e0;
+  --primary: #b8865b;
+  --primary-light: #e8d9cc;
+  --primary-dark: #9e7350;
+  --border: #d9cfc4;
+  --text: #2d2b26;
+  --text-muted: #7a6e64;
+  --white: #ffffff;
+}
+
 *{
   margin: 0;
   padding: 0;
@@ -7,8 +20,8 @@
 body {
   font-family: 'Quicksand', sans-serif;
   font-display: swap;
-  background: #fdf8f5;
-  color: #2d2b26;
+  background: var(--bg);
+  color: var(--text);
 }
 
 h1, h2, h3 {
@@ -223,4 +236,113 @@ button {
 .price-indicator {
   margin-top: 0.75rem;
   margin-bottom: 1.5rem;
+}
+
+.service-card {
+  margin: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: var(--bg-light);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.service-card:hover {
+  border-color: var(--primary);
+  background: var(--bg-hover);
+}
+
+.service-card:active {
+  border-color: var(--primary);
+  background: var(--bg-hover);
+}
+
+.service-card.selected {
+  border-color: var(--primary);
+  background: var(--primary-light);
+  box-shadow: 0 0 0 0.8px var(--primary);
+}
+
+.service-name {
+  font-weight: 500;
+}
+
+.service-price {
+  font-weight: 600;
+}
+
+.addon-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.addon-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: var(--bg-light);
+  border-radius: 8px;
+  border: 1px solid transparent;
+}
+
+.addon-name {
+  font-weight: 500;
+  flex: 1;
+}
+
+.addon-price {
+  font-weight: 600;
+  color: var(--primary);
+  margin-right: 1rem;
+}
+
+.quantity-control button {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: all 0.15s ease;
+}
+
+.quantity-control button:hover {
+  background: var(--primary);
+  color: #999;
+  border-color: var(--primary);
+}
+
+.quantity-control button:active {
+  background: var(--primary);
+  color: #999;
+  border-color: var(--primary);
+}
+
+.qty-badge {
+  min-width: 24px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.clear-btn {
+  color: #999;
+  border-color: #ddd !important;
+  background: transparent !important;
+}
+
+.clear-btn:hover {
+  color: #e74c3c !important;
+  border-color: #e74c3c !important;
+  background: transparent !important;
 }

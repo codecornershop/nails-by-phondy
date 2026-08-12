@@ -18,28 +18,44 @@ const App: Component = () => {
 
   //Base service selection
   const [sets, setSets] = createSignal([
-    { name: 'Short Set', price: 100, selected: false },
-    { name: 'Medium Set', price: 150, selected: false },
-    { name: 'Long Set', price: 200, selected: false }
+    // Acryclic sets
+    { name: 'Short Set', price: 100, category: "acrylic", selected: false },
+    { name: 'Medium Set', price: 150, category: "acrylic", selected: false },
+    { name: 'Long Set', price: 200, category: "acrylic", selected: false },
+    // Gel Sets
+    {name: "Rubber Base", price: 220, category: "gel", selected: false},
+    {name: "Polygel", price: 260, category: "gel", selected: false},
+    // Manicure
+    {name: "Buff and Shine", price: 70, category: "manicure", selected: false},
+    {name: "Massage/Treatment - 5 Minutes", price: 100, category: "manicure", selected: false},
+    {name: "Gel Overlay, Massage, Hand Scrub - 10 Minutes", price: 200, category: "manicure", selected: false},
+    {name: "Soak Off", price: 70, category: "manicure", selected: false},
+    // Pedicure
+    {name: "Gel Overlay, Foot Scrub, Massage", price: 250, category: "pedicure", selected: false},
+    {name: "Foot Scrub, Massage, Nail Strengthening", price: 200, category: "pedicure", selected: false}
   ]);
 
-  //Add-ons (Multiple selections possible)
+  const categories = () => {
+    const all = sets().map(p => p.category);
+    return [...new Set(all)];
+  };
+
+  // Add-ons (Multiple selections possible)
   const [addOns, setAddOns] = createSignal([
-    {name: 'Nail Art', price: 30, selected: false},
-    {name: 'Nail Repair', price: 20, selected: false},
-    {name: 'Soak Off', price: 40, selected: false}
+    {name: 'Rhinestones (each)', price: 10, quantity: 0},
+    {name: 'Chrome /Cateye (each)', price: 15, quantity: 0},
+    {name: 'Ombre (each)', price: 12, quantity: 0}
   ]);
 
   // Calculate Total
   const totalPrice = () => {
     const setTotal = sets().find(s => s.selected)?.price || 0;
     const addOnsTotal = addOns()
-      .filter(item => item.selected)
-      .reduce((sum, item) => sum + item.price, 0);
+      .reduce((sum, item) => sum + (item.price * item.quantity), 0);
     return setTotal + addOnsTotal;
   };
 
-  //Toggle set
+  // Toggle set
   const selectSet = (index: number) => {
     setSets(prev => prev.map((set, i) => ({
       ...set,
@@ -47,13 +63,7 @@ const App: Component = () => {
     })));
   };
 
-  //Toggle add-on
-  const toggleAddOn = (index: number) => {
-    setAddOns(prev => prev.map((item, i) => 
-                              i === index ? { ...item, selected: !item.selected } : item
-                              ));
-  };
-
+  // Toggle add-on
   const [formData, setFormData] = createSignal({
     name: '',
     email: '',
@@ -66,7 +76,7 @@ const App: Component = () => {
     e.preventDefault();
 
     const selectedSet = sets().find(s => s.selected);
-    const selectedAddOnsList = addOns().filter(a => a.selected);
+    const addOnsList = addOns().filter(a => a.quantity > 0).map(a => `${a.name} x ${a.quantity} - R${a.price * a.quantity}`).join(', ');
 
     const message = `*New Booking Request!*%0A%0A
     *Customer:* ${formData().name}%0A
@@ -74,7 +84,7 @@ const App: Component = () => {
     *Date:* ${formData().date}%0A
     *Order:*%0A
     ${selectedSet?.name} - R${selectedSet?.price}%0A
-    ${selectedAddOnsList.map(a => `+ ${a.name} - R${a.price}`).join(`%0A`) || 'No add-ons'}%0A%0A
+    ${addOnsList || 'No add-ons'}%0A%0A
     *Total:* R${totalPrice()}%0A%0A
     _Reply to this message to confirm booking_`;
 
@@ -88,7 +98,7 @@ const App: Component = () => {
       email: formData().email,
       date: formData().date,
       selectedSet: selectedSet?.name,
-      addOns: selectedAddOnsList.map(a => a.name),
+      addOns: addOnsList,
       total: totalPrice()
     });
     //Later: send to email or google forms 
@@ -106,68 +116,6 @@ const App: Component = () => {
           Book Now
         </a>
       </header>
-
-      {/* Services */}
-      <section class="collapsible-section">
-        <div class="section-header" onClick={() => setShowServices(!showServices())}>
-          <h2>Services & Prices</h2>
-          <span class="toggle-icon" style={{ transform: showServices() ? 'rotate(0deg)' : 'rotate(-90deg)' }}>
-            ▾
-          </span>
-        </div>
-        {showServices() && (
-          <div class="section-content">
-            {/* Acrylic Sets */}
-            <div class="service-group">
-              <h3>Acrylic Sets</h3>
-              <div class="service-list">
-                <div class="service-item">
-                  <span>Full Set (Short): </span>
-                  <span>R100</span>
-                </div>
-                <div class="service-item">
-                  <span>Full Set (Medium): </span>
-                  <span>R150</span>
-                </div>
-                <div class="service-item">
-                  <span>Full Set (Long): </span>
-                  <span>R200</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Add Ons */}
-            <div class="service-group">
-              <h3>Add-Ons</h3>
-              <div class="service-list">
-                <div class="service-item">
-                  <span>Nail Art: </span>
-                  <span>R10-R30</span>
-                </div>
-                <div class="service-item">
-                  <span>Nail Repair: </span>
-                  <span>R20</span>
-                </div>
-                <div class="service-item">
-                  <span>Soak Off: </span>
-                  <span>R40</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Special */}
-            <div class="service-group">
-              <h3>Specials</h3>
-              <div class="service-list">
-                <div class="service-item">
-                  <span>Bring A Friend: </span>
-                  <span>Receive R20 Off</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </section>
 
       {/* Gallery Preview */}
       <section class="collapsible-section">
@@ -217,46 +165,113 @@ const App: Component = () => {
             value={formData().email}
             onInput={(e) => setFormData({...formData(), email: e.currentTarget.value })}
           />
-          <div class="form-section">
-            <fieldset class="radio-fieldset">
-              <legend class="form-label">Choose your set:</legend>
-              <div class="radio-group">
-                <For each={sets()}>
-                  {(set, index) => (
-                    <label class="radio-option">
-                      <input
-                        type="radio"
-                        name="set"
-                        checked={set.selected}
-                        onChange={() => selectSet(index())}
-                      />
-                      <span> {set.name}</span>
-                    </label>
-                  )}
+          {/* Services */}
+          <section class="collapsible-section">
+            <div class="section-header" onClick={() => setShowServices(!showServices())}>
+              <h2>Services & Prices</h2>
+              <span class="toggle-icon" style={{ transform: showServices() ? 'rotate(0deg)' : 'rotate(-90deg)' }}>
+                ▾
+              </span>
+            </div>
+            {showServices() && (
+              <div class="section-content">
+                {/* Acrylic Sets */}
+                <For each={categories()}>
+                {(category) => (
+                  <div class="service-group">
+                    <h3>{category.charAt(0).toUpperCase() + category.slice(1)}</h3>
+                    <div class="service-grid">
+                      <For each={sets().filter(p => p.category === category)}>
+                        {(item) => {
+                          const fullIndex = sets().indexOf(item);
+                          return (
+                            <div
+                              classList={{
+                                'service-item': true,
+                                'service-card': true,
+                                'selected': item.selected
+                              }}
+                              onClick={() => selectSet(fullIndex)}
+                            >
+                              <span class="service-name">{item.name}</span>
+                              <span class="service-price">R{item.price}</span>
+                            </div>
+                          );
+                        }}
+                      </For>
+                    </div>
+                  </div>
+                )}
                 </For>
+
+                {/* Add Ons */}
+                <div class="service-group">
+                  <h3>Add-Ons</h3>
+                  <div class="addon-grid">
+                    <For each={addOns()}>
+                      {(item, index) => (
+                        <div class="addon-card">
+                          <span class="addon-name">{item.name}</span>
+                          <span class="addon-price">+R{item.price}</span>
+                        <div class="quantity-control">
+                          <button
+                            type="button"
+                            class="qty-button"
+                            onClick={() => {
+                              const newQty = Math.min(10, item.quantity + 1);
+                              setAddOns(prev => prev.map((a, i) =>
+                                                        i === index() ? { ...a, quantity: newQty } : a
+                                                        ));
+                            }}
+                          >
+                            +
+                          </button>
+                          <span class="qty-badge">{item.quantity}</span>
+                          <button
+                            type="button"
+                            class="qty-button"
+                            onClick={() => {
+                              const newQty = Math.max(0, item.quantity - 1);
+                              setAddOns(prev => prev.map((a, i) => 
+                                                        i === index() ? {...a, quantity: newQty } : a
+                                                        ));
+                            }}
+                          >
+                            -
+                          </button>
+                            {item.quantity > 0 && (
+                              <button
+                                type="button"
+                                class="clear-btn"
+                                onClick={() => {
+                                  setAddOns(prev => prev.map((a, i) =>
+                                                            i === index() ? {...a, quantity: 0 } : a
+                                                            ));
+                                }}
+                              >
+                              {'\u2715'}
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </For>
+                  </div>
+                </div>
+
+                {/* Special */}
+                <div class="service-group">
+                  <h3>Specials</h3>
+                  <div class="service-grid">
+                    <div class="service-item">
+                      <span>Bring A Friend: </span>
+                      <span>Receive R20 Off</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </fieldset>
-          </div>
-          <div class="form-section">
-            <fieldset class="checkbox-fieldset">
-              <legend class="form-label">Add-Ons (optional): </legend>
-              <div class="checkbox-group">
-                <For each={addOns()}>
-                  {(addOn, index) => (
-                    <label class="checkbox-option">
-                      <input
-                        type="checkbox"
-                        name="addon"
-                        checked={addOn.selected}
-                        onChange={() => toggleAddOn(index())}
-                      />
-                      <span> {addOn.name}</span>
-                    </label>
-                  )}
-                </For>
-              </div>
-            </fieldset>
-          </div>
+            )}
+          </section>
           <div class="price-indicator">
             <h4>Total: R{totalPrice()}</h4>
           </div>
@@ -272,6 +287,7 @@ const App: Component = () => {
           <button type="submit">Request Booking</button>
         </form>
       </section>
+
 
       {/* Contact Info Bar */}
       <footer class="info-bar">
