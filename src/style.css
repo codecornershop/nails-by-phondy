@@ -1,14 +1,16 @@
 :root {
-  --bg: #fdf8f5;
-  --bg-light: #f5f0eb;
-  --bg-hover: #ede8e0;
-  --primary: #b8865b;
-  --primary-light: #e8d9cc;
-  --primary-dark: #9e7350;
-  --border: #d9cfc4;
-  --text: #2d2b26;
-  --text-muted: #7a6e64;
-  --white: #ffffff;
+  --bg: #1a1614;
+  --bg-light: #2a2420;
+  --bg-hover: #35302a;
+  --primary: #c69a7a;
+  --primary-light: #3d322b;
+  --primary-dark: #a8846a;
+  --border: #3d3530;
+  --text: #e8ddd4;
+  --text-muted: #a8988a;
+  --accent: #a8b5a0;
+  --accent-light: #e0e8d8;
+  --white: #f5f0eb;
 }
 
 *{
@@ -40,15 +42,16 @@ h1, h2, h3 {
   background-image: url('/images/hero-bg.webp');
   background-size: cover;
   background-position: center;
-  background-color: #f9cfc2;
+  background-color: var(--bg);
   border-radius: 24px;
   margin-bottom: 2rem;
+  color: var(--bg);
 }
 
 .btn {
   display: inline-block;
-  background: linear-gradient(to bottom right, #e08b6e, #f2b8a5);
-  color: white;
+  background: var(--primary);
+  color: var(--bg);
   padding: 0.75rem 1.5rem;
   border-radius: 24px;
   margin-top: 1rem;
@@ -60,7 +63,7 @@ h1, h2, h3 {
 }
 
 .service-list {
-  background: white;
+  background: var(--bg-light);
   border-radius: 16px;
   padding: 0.75rem 0;
   border-bottom: 1px solid #eee;
@@ -107,6 +110,7 @@ form {
 }
 
 input, select, button {
+  background: var(--primary-dark);
   padding: 0.75rem;
   border-radius: 12px;
   border: 1px solid #ddd;
@@ -114,8 +118,10 @@ input, select, button {
 }
 
 button {
-  background: linear-gradient(to bottom right, #e08b6e, #f2b8a5);
-  color: white;
+  margin: 0 auto;
+  max-width: 300px;
+  background: var(--primary);
+  color: var(--bg);
   border: none;
   cursor: pointer;
 }
@@ -141,7 +147,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  background: white;
+  background: var(--bg-light);
   border-radius: 16px;
   padding: 0.75rem;
 }
@@ -151,14 +157,14 @@ button {
   align-items: center;
   gap: 1rem;
   padding: 0.875rem 1rem;
-  background: #fef7f2;
+  background: var(--bg-light);
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .radio-option:hover, .checkbox-option:hover {
-  background: #f9e6e0;
+  background: var(--bg-hover);
   transform: translateX(4px);
 }
 
@@ -180,7 +186,7 @@ button {
 .collapsible-section {
   margin-bottom: 1.5rem;
   border-radius: 20px;
-  background: #faf4ea;
+  background: var(--bg-light);
   overflow: hidden;
 }
 
@@ -190,12 +196,12 @@ button {
   align-items: center;
   padding: 1rem 1.5rem;
   cursor: pointer;
-  background: #f0e4d4;
+  background: var(--bg-light);
   transition: background 0.2s ease;
 }
 
 .section-header:hover {
-  background: #e6b8a2;
+  background: var(--bg-hover);
 }
 
 .section-header h2 {
@@ -234,8 +240,17 @@ button {
 }
 
 .price-indicator {
-  margin-top: 0.75rem;
-  margin-bottom: 1.5rem;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.service-group {
+  padding-bottom: 10px;
 }
 
 .service-card {
@@ -243,7 +258,7 @@ button {
   padding: 0.75rem 1rem;
   border: 2px solid transparent;
   border-radius: 8px;
-  background: var(--bg-light);
+  background: var(--bg);
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
@@ -286,9 +301,11 @@ button {
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem 1rem;
-  background: var(--bg-light);
+  background: var(--bg);
   border-radius: 8px;
   border: 1px solid transparent;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .addon-name {
@@ -300,6 +317,13 @@ button {
   font-weight: 600;
   color: var(--primary);
   margin-right: 1rem;
+}
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
 }
 
 .quantity-control button {
@@ -335,10 +359,41 @@ button {
   font-weight: 600;
 }
 
+.price-sticky {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.06);
+  z-index: 10;
+  padding: 0.75rem 0;
+}
+
 .clear-btn {
   color: #999;
   border-color: #ddd !important;
   background: transparent !important;
+}
+
+.clear-selection-btn {
+  margin: 0 auto;
+  max-width: 300px;
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-light);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.clear-selection-btn:hover {
+  border-color: #e74c3c;
+  color: #e74c3c;
+  background: #fdf8f5;
 }
 
 .clear-btn:hover {
