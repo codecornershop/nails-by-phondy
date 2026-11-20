@@ -1,0 +1,15 @@
+:root {
+  --bg: #ECDFD2;
+  --bg-light: #F4EBE2;
+  --bg-hover: #e0d1c2;
+  --text: #081849;
+  --text-muted: #4a5478;
+  --primary: #213885;
+  --primary-light: #a8b4d8;
+  --primary-dark: #162a66;
+  --secondary: #cccacc;
+  --accent: #5f3475;
+  --accent-dark: #893172;
+  --border: #cccacc;
+  --white: #fdf8f3;
+}

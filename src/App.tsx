@@ -1,9 +1,10 @@
-import { Component, createSignal, For } from 'solid-js';
+import { Component, createSignal, For, onMount, onCleanup } from 'solid-js';
 import './style.css';
 
 const App: Component = () => {
   const [showServices, setShowServices] = createSignal(false);
   const [showGallery, setShowGallery] = createSignal(false);
+  const [galleryRef, setGalleryRef] = createSignal<HTMLDivElement>();
 
   const galleryImages = [
     'img1.webp',
@@ -12,9 +13,30 @@ const App: Component = () => {
     'img4.webp',
     'img5.webp',
     'img6.webp',
-    'img9.webp',
-    'img10.webp'
   ];
+
+  onMount(() =>{
+    const el = galleryRef();
+    if (!el) return;
+    
+    let hasPeeked = false;
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasPeeked) {
+            hasPeeked = true;
+            el.classList.add('peek');
+            setTimeout(() => el.classList.remove('peek'), 1300);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(el);
+    onCleanup(() => observer.disconnect());
+  });
 
   //Manicure (Nail sets) 
   const [sets, setSets] = createSignal([
@@ -118,17 +140,25 @@ const App: Component = () => {
     <div class="container">
     {/*Hero*/}
       <header class="hero">
-        <h1>Nails by Phondy</h1>
-        <p>
-        Professional nail care at your convenience
-        </p>
-        <a href="#contact" class="btn hero-btn">
-          Book Now
-        </a>
+        <div class="hero-logo">
+          <img
+            src={`${import.meta.env.BASE_URL}images/NP-light.png`}
+            alt="Nails by Phondy"
+          />
+        </div>
+        <div class="hero-content">
+          <h1>Nails by Phondy</h1>
+          <p>
+          Professional nail care at your convenience
+          </p>
+          <a href="#contact" class="btn hero-btn">
+            Book Now
+          </a>
+        </div>
       </header>
 
       {/* Gallery Preview */}
-      <section class="collapsible-section">
+      <section class="collapsible-section full-width">
         <div class="section-header" onClick={() => setShowGallery(!showGallery())}>
           <h2>Recent Work</h2>
           <span class="toggle-icon" style={{ transform: showGallery() ? 'rotate(0deg)' : 'rotate(-90deg)' }}>
@@ -137,7 +167,7 @@ const App: Component = () => {
         </div>
         {showGallery() && (
           <div class="section-content">
-            <div class="gallery-grid">
+            <div class="gallery-strip" ref={setGalleryRef}>
               {/* Gallery Images */}
               <For each={galleryImages}>
                 {(img) => (
@@ -158,25 +188,29 @@ const App: Component = () => {
       <section id="contact" class="contact">
         <h2>Book Your Appointment</h2>
         <form onSubmit={handleSubmit}>
-          <label for="customer-name">Your name</label>
-          <input
-            type="text"
-            id="customer-name"
-            placeholder="Your name"
-            value={formData().name}
-            onInput={(e) => setFormData({...formData(), name: e.currentTarget.value })}
-            required
-          />
-          <label for="customer-email">Email address</label>
-          <input
-            type="email"
-            id="customer-email"
-            placeholder="name@email.com"
-            value={formData().email}
-            onInput={(e) => setFormData({...formData(), email: e.currentTarget.value })}
-          />
+          <div class="field-group">
+            <label for="customer-name">Your name</label>
+            <input
+              type="text"
+              id="customer-name"
+              placeholder="Your name"
+              value={formData().name}
+              onInput={(e) => setFormData({...formData(), name: e.currentTarget.value })}
+              required
+            />
+          </div>
+          <div class="field-group">
+            <label for="customer-email">Email address</label>
+            <input
+              type="email"
+              id="customer-email"
+              placeholder="name@email.com"
+              value={formData().email}
+              onInput={(e) => setFormData({...formData(), email: e.currentTarget.value })}
+            />
+          </div>
           {/* Services */}
-          <section class="collapsible-section">
+          <section class="collapsible-section full-width">
             <div class="section-header" onClick={() => setShowServices(!showServices())}>
               <h2>Services & Prices</h2>
               <span class="toggle-icon" style={{ transform: showServices() ? 'rotate(0deg)' : 'rotate(-90deg)' }}>
@@ -281,7 +315,7 @@ const App: Component = () => {
                             {item.quantity > 0 && (
                               <button
                                 type="button"
-                                class="clear-btn"
+                                class="clear-btn, full-width"
                                 onClick={() => {
                                   setAddOns(prev => prev.map((a, i) =>
                                                             i === index() ? {...a, quantity: 0 } : a
@@ -319,14 +353,16 @@ const App: Component = () => {
             </div>
           )}
 
-          <label for="booking-date">Booking Date</label>
-          <input
-            type="date"
-            id="booking-date"
-            value={formData().date}
-            onInput={(e) => setFormData({...formData(), date: e.currentTarget.value })}
-            required
-          />
+          <div class="field-group">
+            <label for="booking-date">Booking Date</label>
+            <input
+              type="date"
+              id="booking-date"
+              value={formData().date}
+              onInput={(e) => setFormData({...formData(), date: e.currentTarget.value })}
+              required
+            />
+          </div>
           <button
             type='button'
             class="clear-selection-btn"
@@ -339,7 +375,7 @@ const App: Component = () => {
           >
             Clear All
           </button>
-          <button type="submit">Request Booking</button>
+          <button type="submit" class="full-width">Request Booking</button>
         </form>
       </section>
 
