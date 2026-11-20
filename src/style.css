@@ -573,6 +573,20 @@ button[type="submit"]:hover {
 @media (max-width: 768px) {
   .container { padding: 0 1.5rem; }
   section { padding: 3rem 0; }
+  .hero {
+    min-height: 60vh;
+    padding: 3rem 1.5rem 2.5rem;
+  }
+  
+  .hero-logo {
+    top: 2rem;
+    left: 40%;
+    transform: translateX(-50%);
+    width: 60vw;
+    max-width: 280px;
+    opacity: 0.09;
+  }
+
   form {
     grid-template-columns: 1fr;
     gap: 1.25rem;
