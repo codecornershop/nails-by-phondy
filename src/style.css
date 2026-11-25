@@ -594,4 +594,16 @@ button[type="submit"]:hover {
   form > .full-width {
     grid-column: span 1;
   }
+
+  .gallery-strip {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+  }
+
+  .gallery-strip img {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 60vh;
+  }
 }
