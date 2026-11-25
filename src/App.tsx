@@ -18,7 +18,7 @@ const App: Component = () => {
     'img9.webp',
     'img10.webp',
     'img11.webp',
-    'img11.webp'
+    'img12.webp'
   ];
 
   onMount(() =>{
